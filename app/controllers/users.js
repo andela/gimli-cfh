@@ -2,6 +2,7 @@
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
+  jwt = require('jsonwebtoken'),
   User = mongoose.model('User');
 var avatars = require('./avatars').all();
 
@@ -16,12 +17,13 @@ exports.authCallback = function(req, res, next) {
  * Show login form
  */
 exports.signin = function(req, res) {
+  
   if (!req.user) {
     res.redirect('/#!/signin?error=invalid');
   } else {
     res.redirect('/#!/app');
   }
-};
+}; 
 
 /**
  * Show sign up form
@@ -46,6 +48,13 @@ exports.signout = function(req, res) {
  * Session
  */
 exports.session = function(req, res) {
+  // create jwt payload
+  var tokenData = {
+    userMail: req.body.email
+  };
+  var jwtToken = jwt.sign(tokenData, process.env.TOKENSECRET);
+  console.log('jwt',jwtToken);
+  res.header('Authorization', jwtToken);
   res.redirect('/');
 };
 
@@ -93,8 +102,14 @@ exports.create = function(req, res) {
               user: user
             });
           }
+          // create jwt payload
+          var tokenData = {
+            userMail: user.email
+          };
+          var jwtToken = jwt.sign(tokenData, process.env.TOKENSECRET);
           req.logIn(user, function(err) {
             if (err) return next(err);
+            res.header('Authorization', jwtToken);
             return res.redirect('/#!/');
           });
         });
