@@ -33,6 +33,24 @@
         That makes you a loser, unfortunately.
       </div>
     </div>
+    <!-- MODAL TO ASK THE CZAR TO PICK A CARD  -->
+    <div id="shuffleModal" class="modal fade" role="dialog">
+      <div class="modal-content">
+        <div class="modal-content">
+             <h4 id="shuffleText">As our new Czar, pick a card to continue...</h4>
+             <div class="center">
+               <div ng-click="shuffleCards()" ng-style="{'cursor':'pointer'}" style='margin: auto;'>
+                 <img src='../img/black-card.png' style='width: 100px;' class='animated flipInX' id='shufflecard1' />
+                 <img src='../img/black-card.png' style='width: 100px;' class='animated flipInX' id='shufflecard2' />
+                 <img src='../img/black-card.png' style='width: 100px;' class='animated flipInX' id='shufflecard3' />
+               </div>
+             </div>
+
+             <div class="modal-footer">
+               <button type="button" class="btn" id="close" data-dismiss="modal" style="display:none; ">Close</button>
+            </div>
+      </div>
+    </div>
+    <!-- MODAL ENDS HERE  -->
   </div>
 </div>
-
