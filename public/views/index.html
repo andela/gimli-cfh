@@ -66,12 +66,6 @@ $(document).ready(function() {
           <li><a href="/">Home</a></li>
           <li><a href="#how-to-play">How to Play</a></li>
           <li><a href="#charity">Charity</a></li>
-<<<<<<< HEAD
-          <li><a href="#team">Team</a></li>
-          <li><a href="#sign-in">SignIn</a></li>
-          <li><a href="#sign-up" class="btn waves-effect waves-light blue lighten-1">
-            SignUp</a></li>
-=======
           <li><a href="#team">Team</a></li>
           <span ng-show="showOptions">
             <li><a href="#sign-in" ng-click="showModal($event)">SignIn</a></li>
@@ -81,7 +75,6 @@ $(document).ready(function() {
           <span ng-hide="showOptions" class="btn waves-effect waves-light blue lighten-1">
             <li><a ng-click="signout()">Sign Out</a></li>
           </span>
->>>>>>> bd28c8168bdd60c5052e8f9470a6667cff1eb5eb
         </ul>
 
         <!-- Mobile nav -->
@@ -189,7 +182,7 @@ $(document).ready(function() {
           <p>
             <a href="http://www.wish.org"><img src="img/make-a-wish-logo.png" id="wish"/></a>
           </p>
->>>>>>> bd28c8168bdd60c5052e8f9470a6667cff1eb5eb
+
         </div>
       </div>
     </div>
@@ -212,20 +205,6 @@ $(document).ready(function() {
       <div class="row">
         <div class="col s12 center">
           <h3><i class="mdi-content-send brown-text"></i></h3>
-<<<<<<< HEAD
-            <h4>CFH Team</h4>
-          <p class="left-align light">Lorem ipsum dolor sit amet, consectetur
-            adipiscing elit. Nullam scelerisque id nunc nec volutpat. Etiam
-            pellentesque tristique arcu, non consequat magna fermentum ac.
-            Cras ut ultricies eros. Maecenas eros justo, ullamcorper a sapien
-            id, viverra ultrices eros. Morbi sem neque, posuere et pretium
-            eget, bibendum sollicitudin lacus. Aliquam eleifend sollicitudin
-            diam, eu mattis nisl maximus sed. Nulla imperdiet semper molestie.
-            Morbi massa odio, condimentum sed ipsum ac, gravida ultrices erat.
-            Nullam eget dignissim mauris, non tristique erat. Vestibulum ante
-            ipsum primis in faucibus orci luctus et ultrices posuere cubilia
-            Curae;</p>
-=======
             <h4>Meet the CFH Team</h4>
           <div class="left-align light">
             <p class="center">
@@ -236,86 +215,13 @@ $(document).ready(function() {
               <a href="http://github.com/davegonzalez">David Gonzalez</a>
             </p>
           </div>
->>>>>>> bd28c8168bdd60c5052e8f9470a6667cff1eb5eb
         </div>
       </div>
     </div>
   </div>
 
-<<<<<<< HEAD
+
   <!-- Modals -->
-
-  <!-- MODAL TO ASK THE CZAR TO PICK A CARD  -->
-  <div id="sign-in" class="modal fade" role="dialog">
-    <div class="modal-content">
-      <div class="modal-content">
-           <h4 id="shuffleText">You are the Czar - Click card to pick the next question</h4>
-           <div class="center">
-             <div ng-click="shuffleCards()" ng-style="{'cursor':'pointer'}" style='margin: auto;'>
-               <img src='../img/black-card.png' style='width: 100px;' class='animated flipInX' id='shufflecard1' />
-               <img src='../img/black-card.png' style='width: 100px;' class='animated flipInX' id='shufflecard2' />
-               <img src='../img/black-card.png' style='width: 100px;' class='animated flipInX' id='shufflecard3' />
-             </div>
-           </div>
-
-           <div class="modal-footer">
-             <button type="button" class="btn" id="close" data-dismiss="modal" style="display:none; ">Close</button>
-          </div>
-    </div>
-  </div>
-  <!-- MODAL ENDS HERE  -->
-  <!-- Sign in -->
-  <div id="" class="modal" ng-controller="IndexController">
-    <div class="modal-content">
-      <h4>Sign in with: </h4>
-
-      <!-- Sigin with facebook, twitter, github, or google -->
-      <div class="row">
-        <ul>
-          <li >
-            <a href="/auth/facebook" class="waves-effect waves-light btn facebook">
-              <i class="fa fa-facebook-f left"></i></a>
-          </li>
-          <li>
-            <a href="/auth/twitter" class="waves-effect waves-light btn twitter">
-              <i class="fa fa-twitter left"></i></a>
-          </li>
-          <li>
-            <a href="/auth/github" class="waves-effect waves-light btn github">
-              <i class="fa fa-github left"></i></a>
-          </li>
-          <li>
-            <a href="/auth/google" class="waves-effect waves-light btn googleplus">
-              <i class="fa fa-google-plus left"></i></a>
-          </li>
-        </ul>
-      </div>
-        <p id="create">Or log in below:</p>
-
-        <!-- Signin with email and password -->
-        <div class="row">
-          <form class="col s12" action="/users/session" method="post">
-            <div class="row">
-              <div class="sign-error" ng-show="showError() === 'invalid'">
-                Please check your username/password and try again.
-              </div>
-              <div class="input-field col s12">
-                <i class="fa fa-envelope prefix"></i>
-                <input placeholder="Email" id="email"
-                type="text" name="email" required novalidate>
-                <label for="email"></label>
-              </div>
-              <div class="input-field col s12">
-                <i class="fa fa-lock prefix"></i>
-                <input placeholder="Password" id="password"
-                type="password" name="password" required novalidate>
-                <label for="password"></label>
-              </div>
-              <div class="right">
-                <button id="sign-up-btn-other"
-                class="btn waves-effect waves-light blue lighten-1" type='submit'>
-                Sign In</button>
-=======
   <!-- Index page modals -->
   <div ng-controller="IndexController">
     <!-- Sign in -->
@@ -367,7 +273,6 @@ $(document).ready(function() {
                   class="btn waves-effect waves-light blue lighten-1" type='submit' ng-click="signin()">
                   Sign In</button>
                 </div>
->>>>>>> bd28c8168bdd60c5052e8f9470a6667cff1eb5eb
               </div>
             </form>
           </div>
@@ -380,35 +285,6 @@ $(document).ready(function() {
       <h4>Sign Up </h4>
       <!-- SignUp with facebook, twitter, github, or google -->
         <div class="row">
-<<<<<<< HEAD
-          <form class="col s12" action="/users" method="post">
-            <div class="row">
-              <div class="input-field col s12">
-                <i class="fa fa-user prefix"></i>
-                <input placeholder="Full Name" id="name"
-                type="text" name="name" required novalidate>
-                <label for="name"></label>
-              </div>
-              <div class="input-field col s12">
-                <i class="fa fa-envelope prefix"></i>
-                <input placeholder="Email" id="email"
-                type="text" name="email" required novalidate>
-                <label for="email"></label>
-              </div>
-              <div class="input-field col s12">
-                <i class="fa fa-lock prefix"></i>
-                <input placeholder="Password" id="password"
-                type="password" name="password" required novalidate>
-                <label for="password"></label>
-              </div>
-              <div class="right">
-                <button id="sign-up-btn-other"
-                class="btn waves-effect waves-light blue lighten-1" type='submit'>
-                Sign Up</button>
-              </div>
-            </div>
-          </form>
-=======
           <ul>
             <li >
               <a href="/auth/facebook" class="waves-effect waves-light btn facebook">
@@ -427,7 +303,6 @@ $(document).ready(function() {
                 <i class="fa fa-google-plus left"></i></a>
             </li>
           </ul>
->>>>>>> bd28c8168bdd60c5052e8f9470a6667cff1eb5eb
         </div>
           {{ message }}
           <p id="create">Or create a username/password</p>
