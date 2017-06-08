@@ -11,7 +11,6 @@ $location, MakeAWishFactsService, $dialog, $http) => {
   $scope.enableSendGuestInvite = false;
   const makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
   $scope.makeAWishFact = makeAWishFacts.pop();
-
   var windw = this;
 
   $.fn.followTo = function ( pos ) {
@@ -116,8 +115,8 @@ $location, MakeAWishFactsService, $dialog, $http) => {
         email: $scope.guestEmail,
         url: `${encodeURIComponent(window.location.href)}` });
     $http.get(`http://localhost:3000/api/sendmail/${details}`);
+    $scope.guestEmail = '';
   };
-
   /**
    * Send bulk invite emails to users
    * @function emailUsers
@@ -134,6 +133,8 @@ $location, MakeAWishFactsService, $dialog, $http) => {
           url: `${encodeURIComponent(window.location.href)}` });
       $http.get(`http://localhost:3000/api/sendmail/${details}`);
     });
+    $scope.searchString = '';
+    $scope.users = '';
   };
 
   $scope.sendPickedCards = () => {
@@ -253,7 +254,8 @@ $location, MakeAWishFactsService, $dialog, $http) => {
   $scope.showModal1 = () => {
     $('.modal').modal();
     $('#modal1').modal('open');
-  }
+  };
+
 
    /**
    * Opens modal when share button is clicked
@@ -263,7 +265,7 @@ $location, MakeAWishFactsService, $dialog, $http) => {
   $scope.showModal2 = () => {
     $('.modal').modal();
     $('#modal2').modal('open');
-  }
+  };
 
   $scope.$watch('game.gameID', () => {
     if (game.gameID && game.state === 'awaiting players') {
