@@ -242,6 +242,15 @@ angular.module('mean.system')
     addToNotificationQueue(data.notification);
   });
 
+  socket.on('kickout', () => {
+  $('.modal').modal({
+    complete: () => {
+      $location.path('/#/');
+    }
+  });
+    $('#kickout-modal').modal('open');
+  });
+
   game.joinGame = function(mode,room,createPrivate) {
     mode = mode || 'joinGame';
     room = room || '';
@@ -267,7 +276,6 @@ angular.module('mean.system')
   game.pickWinning = function(card) {
     socket.emit('pickWinning',{card: card.id});
   };
-
   decrementTime();
 
   return game;
