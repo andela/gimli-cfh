@@ -61,14 +61,12 @@ Game.prototype.payload = function() {
       avatar: player.avatar,
       premium: player.premium,
       socketID: player.socket.id,
-      color: player.color
+      color: player.color,
     });
   });
-
-  console.log(players);
   return {
     gameID: this.gameID,
-    players: players,
+    players,
     czar: this.czar,
     state: this.state,
     round: this.round,
