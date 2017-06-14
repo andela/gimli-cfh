@@ -76,6 +76,7 @@ $location, MakeAWishFactsService, $dialog, $http, $q) => {
         }
       });
     };
+
   $('.tooltipped').tooltip({ delay: 50 });
   $(() => {
     $('.button-collapse').sideNav();
@@ -230,6 +231,7 @@ $location, MakeAWishFactsService, $dialog, $http, $q) => {
    * @function countCheckedBox
    * @returns {int} - No of checked box
    */
+
   $scope.countCheckedBox = () => {
     const userDetails = $scope.users.filter(user => (
       user.selected
@@ -456,6 +458,7 @@ $location, MakeAWishFactsService, $dialog, $http, $q) => {
       }
     }
   });
+
   /**
    * Opens modal when share button is clicked
    * @function showModal1
