@@ -1,6 +1,11 @@
 <div class="row">
   <div class="col s12 valign-wrapper" id="questions">
-    <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players'"></span>
+    <span ng-bind-html-unsafe="game.curQuestion.text" ng-hide="game.state === 'game ended' || game.state ==='game dissolved' || game.state === 'awaiting players' || game.state === 'czar pick card'"></span>
+  </div>
+
+  <div ng-show="game.state === 'czar pick card' && !isCzar()" class="czar-waiting valign-wrapper">
+    <h5>Waiting for CZAR to pick a card..</h5>
+    <div class="clear"></div>
   </div>
 
   <div id="startGame" class="center" ng-show="game.state === 'awaiting players'">
@@ -29,7 +34,7 @@
       </div>
 
 
-      <div id="start-game-container" ng-click="startGame()" ng-show="(game.playerIndex === 0 || game.joinOverride) && game.players.length >= game.playerMinLimit">
+      <div id="start-game-container" ng-click="showRegion()" ng-show="(game.playerIndex === 0 || game.joinOverride) && game.players.length >= game.playerMinLimit">
         <span class="btn">
           Start Game with {{game.players.length}} players
         </span>
@@ -132,6 +137,30 @@
     </div>
     <div class="clear"></div>
   </div>
+
+  <!-- Select Region modal -->
+  <div id="region-modal" class="modal" role="dialog">
+    <div class="modal-content center">
+      <h3>Please select a region to continue</h3>
+      <div id="modal-body-2">
+        <select ng-model="region" name="region" id="region">
+          <option value="" disabled>Choose a region</option>
+          <option value="NG">Nigeria</option>
+          <option value="GH">Ghana</option>
+          <option value="US">USA</option>
+          <option value="UK">United Kingdom</option>
+          <option value="KEN">Kenya</option>
+          <option value="UGH">Uganda</option>
+        </select>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" ng-click="startGame()" class="btn modal-close" id="close" data-dismiss="modal">LET'S GO!</button>
+      </div>
+    </div>
+    <div class="clear"></div>
+  </div>
+
   <!-- MODAL TO ASK THE CZAR TO PICK A CARD  -->
    <div id="shuffleModal" class="modal modal-6" role="dialog">
        <div class="modal-content">

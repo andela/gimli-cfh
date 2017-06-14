@@ -96,6 +96,7 @@ module.exports = function(app, passport, auth) {
     var answers = require('../app/controllers/answers');
     app.get('/answers', answers.all);
     app.get('/answers/:answerId', answers.show);
+    app.post('/answers/:region', answers.saveRegion);
     // Finish with setting up the answerId param
     app.param('answerId', answers.answer);
 
@@ -103,6 +104,7 @@ module.exports = function(app, passport, auth) {
     var questions = require('../app/controllers/questions');
     app.get('/questions', questions.all);
     app.get('/questions/:questionId', questions.show);
+    app.post('/questions/:region', questions.saveRegion);
     // Finish with setting up the questionId param
     app.param('questionId', questions.question);
 
