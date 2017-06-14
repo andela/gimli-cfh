@@ -120,21 +120,21 @@ $location, MakeAWishFactsService, $dialog, $http, $q) => {
   $scope.setCookie = (cname, cvalue, exdays) => {
       var d = new Date();
       d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-      var expires = "expires="+d.toUTCString();
-      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+      const expires = `expires=${d.toUTCString()}`;
+      document.cookie = `${cname}=${cvalue};${expires};path=/`;
     };
 
     $scope.getCookie = (cname) => {
-      var name = cname + "=";
-      var ca = document.cookie.split(';');
-      for(var i = 0; i < ca.length; i++) {
-          var c = ca[i];
-          while (c.charAt(0) == ' ') {
-              c = c.substring(1);
-          }
-          if (c.indexOf(name) == 0) {
-              return c.substring(name.length, c.length);
-          }
+      const name = `${cname}=`;
+      const ca = document.cookie.split(';');
+      for (let i = 0; i < ca.length; i += 1) {
+        let c = ca[i];
+        while (c.charAt(0) === ' ') {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+          return c.substring(name.length, c.length);
+        }
       }
       return '';
     };
@@ -242,7 +242,7 @@ $location, MakeAWishFactsService, $dialog, $http, $q) => {
    * Check the typed email of guest to see if
    * it is valid
    * @function checkEmail
-   * @returns {boolean} -
+   * @returns {boolean} result
    */
   $scope.checkEmail = () => {
     const filter = /^[\w\-.+]+@[a-zA-Z0-9.-]+\.[a-zA-z0-9]{2,4}$/;
