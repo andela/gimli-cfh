@@ -19,13 +19,6 @@ $location, MakeAWishFactsService, $dialog, $http, $q) => {
   // get the chat input tag from the DOM
   $scope.inputMessage = $('.inputMessage');
 
-  $scope.showRegion = () => {
-    $('.modal').modal({
-      dismissible: false,
-    });
-    $('#region-modal').modal('open');
-  }
-
   // displays chat messages on client side
   const displayChatMessage = (senderName, senderAvatar,
   chatMessage, timeSent, self) => {
@@ -58,24 +51,24 @@ $location, MakeAWishFactsService, $dialog, $http, $q) => {
     );
   };
 
-  $.fn.followTo = function (pos) {
-      const $this = this,
-        $window = $(windw);
+  $.fn.followTo = (pos) => {
+    const $this = this,
+      $window = $(windw);
 
-      $window.scroll((e) => {
-        if ($window.scrollTop() > pos) {
-          $this.css({
-            position: 'absolute',
-            bottom: -20
-          });
-        } else {
-          $this.css({
-            position: 'fixed',
-            bottom: 10
-          });
-        }
-      });
-    };
+    $window.scroll(() => {
+      if ($window.scrollTop() > pos) {
+        $this.css({
+          position: 'absolute',
+          bottom: -20
+        });
+      } else {
+        $this.css({
+          position: 'fixed',
+          bottom: 10
+        });
+      }
+    });
+  };
   $('.tooltipped').tooltip({ delay: 50 });
   $(() => {
     $('.button-collapse').sideNav();
@@ -199,6 +192,8 @@ $location, MakeAWishFactsService, $dialog, $http, $q) => {
           $scope.hasPickedCards = true;
           $timeout($scope.sendPickedCards, 300);
         }
+      } else {
+        $scope.pickedCards.pop();
       }
     }
   };
@@ -217,13 +212,13 @@ $location, MakeAWishFactsService, $dialog, $http, $q) => {
    * @function searchUser
    * @returns {object} - user
    */
-    $scope.searchUser = () => {
-      const searchString = $scope.searchString || ' ';
-      $http.get(`http://localhost:3000/api/search/users/${searchString}/`)
-      .success((response) => {
-        $scope.users = response;
-      });
-    };
+  $scope.searchUser = () => {
+    const searchString = $scope.searchString || ' ';
+    $http.get(`http://localhost:3000/api/search/users/${searchString}/`)
+    .success((response) => {
+      $scope.users = response;
+    });
+  };
   /**
    * Counts the number of box checked by the user and
    * and returns the length
@@ -456,6 +451,7 @@ $location, MakeAWishFactsService, $dialog, $http, $q) => {
       }
     }
   });
+
   /**
    * Opens modal when share button is clicked
    * @function showModal1
@@ -497,16 +493,16 @@ $location, MakeAWishFactsService, $dialog, $http, $q) => {
             $('#copy-link').text(txt);
           }, 200);
           $scope.modalShown = true;
-          }
         }
       }
-    });
-
-    if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
-      game.joinGame('joinGame', $location.search().game);
-    } else if ($location.search().custom) {
-      game.joinGame('joinGame', null, true);
-    } else {
-      game.joinGame();
     }
-  }]);
+  });
+
+  if ($location.search().game && !(/^\d+$/).test($location.search().game)) {
+    game.joinGame('joinGame', $location.search().game);
+  } else if ($location.search().custom) {
+    game.joinGame('joinGame', null, true);
+  } else {
+    game.joinGame();
+  }
+}]);
