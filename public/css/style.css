@@ -146,7 +146,7 @@ nav .brand-logo img{
 /* Form */
 /* label color */
 .input-field input, input[type=text]{
-  border-bottom: 1px solid #fb8c00;
+  border-bottom: 1px solid #fb8c00 !important;
 }
 .input-field i{
   color: #90a4ae;
@@ -164,7 +164,9 @@ input[type=password]:focus{
 .input-field input[type=password]:focus,
 input[type=text]:focus,
 input[type=password]:focus,
-input[type=text]:focus:not([readonly]){
+input[type=search]:focus,
+input[type=text]:focus:not([readonly]),
+input[type=search]:focus:not([readonly]){
   border-bottom: 1px solid #ef6c00;
   box-shadow: 0 1px 0 0 #ef6c00;
 }
@@ -331,7 +333,11 @@ footer h5{
    clear: both;
  }
 
-#modal1, #modal2, .modal-4, .modal-5, .modal-6, #kickout-modal {
+select {
+  display: block;
+}
+
+#modal1, #modal2, .modal-4, .modal-5, .modal-6, #kickout-modal, #region-modal {
   color: black;
   background-color: transparent;
   border: none;
@@ -344,6 +350,10 @@ footer h5{
 #modal-body {
   height: 350px !important;
   overflow: scroll;
+}
+
+#modal-body2 {
+  height: 200px !important;
 }
 
 
@@ -481,9 +491,9 @@ footer h5{
 }
 
 .cfh-card {
-  background-image: url('/img/card-2.jpg');
+  background-image: url('/img/card.jpeg');
   background-size: cover;
-  background-position:top;
+  background-position:center;
   background-repeat: no-repeat;
   height: 190px;
   color: black;
@@ -495,6 +505,10 @@ footer h5{
 
 .p-5 {
   padding: 5px;
+}
+
+.p-2 {
+  padding: 2px;
 }
 
 .fixed-card {
@@ -571,46 +585,70 @@ footer h5{
   margin: 0px;
 }
 
-.chat-body {
-  display: none;
-}
-
 .right {
   float: right;
 }
-
+.chat-body{
+  display: none;
+}
 .chat-holder {
   padding: 10px;
+  height: 30vh;
+  overflow: scroll;
 }
-
-.chat-holder ul {
-  display: inline-table;
-  width: 100%;
+.self{
+  background-color: rgba(153, 153, 153, 0.1);
 }
-
-.chat-holder ul li {
-  display: block;
-  list-style: none;
-  padding: 5px 0px 0px 5px;
-  margin-bottom: 5px;
-  width: 100%;
+.other{
+  background-color: rgba(102, 102, 102, 0.2);
 }
-
-.chat-holder ul li:nth-child(even) {
-  background-color: #fb8c00;
+.chat ul li {
+  width: inherit;
+  word-wrap: break-word;
 }
-
+.chat ul li p{
+  line-height: 1.5em;
+}
+.chat ul > ul.row {
+  padding-top: 0.8em;
+}
+.chat ul > ul div p {
+  display: inline;
+  font-weight: 800;
+}
+.chat ul > ul div span {
+  font-size: 10px;
+  color: #fb8c00;
+  margin-left: 90px;
+}
 .chat-input {
-  padding: 5px;
+  margin: 0px 10px;
 }
 .chat-input input {
-  height: 40px;
-  border: 2px solid rgb(37, 50, 69);
-  margin: 0px;
-  border-radius: 3px;
-  padding: 0px 5px;
+  width: 100%;
 }
-
+.chat-holder ul > ul li img{
+  height:30px;
+  width: 30px;
+}
+.chat-holder ul > ul li p > img{
+  height:20px;
+  width: 20px;
+}
+#chat-status {
+  color: rgba(153, 153, 153, 0.8);
+  z-index: 1000;
+}
+.emojionearea-picker img{
+  width: 15px !important;
+  height: 15px !important;
+  margin: 0px !important;
+}
+.emojionearea .emojionearea-picker .emojionearea-scroll-area .emojibtn{
+  width: 20px !important;
+  height: 20px !important;
+  padding: 0px !important;
+}
 #app-container {
   margin: 0px !important;
 }
@@ -641,3 +679,26 @@ footer h5{
   font-size: 18px;
 }
 
+#region-modal {
+  color: black;
+}
+
+.m-center {
+  margin: 0 auto;
+}
+
+.czar-waiting {
+  display: block;
+  text-align: center;
+  height: auto !important;
+}
+
+.czar-waiting img {
+  display: block !important;
+  margin: 0 auto;
+}
+
+.czar-waiting h5 {
+  margin-top: 5px;
+  display: block !important;;
+}

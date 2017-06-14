@@ -19,13 +19,6 @@ $location, MakeAWishFactsService, $dialog, $http, $q) => {
   // get the chat input tag from the DOM
   $scope.inputMessage = $('.inputMessage');
 
-  $scope.showRegion = () => {
-    $('.modal').modal({
-      dismissible: false,
-    });
-    $('#region-modal').modal('open');
-  }
-
   // displays chat messages on client side
   const displayChatMessage = (senderName, senderAvatar,
   chatMessage, timeSent, self) => {
