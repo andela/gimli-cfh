@@ -24,6 +24,7 @@ angular.module('mean.system')
             password: $scope.password
           };
           $http.post('/api/auth/signin', newuser).then((response) => {
+            window.user = response;
             if (response.data.signinStatus === 'success') {
               $window.localStorage.setItem('token', response.data.token);
            // $cookie.put('jwt',response.data.token);
@@ -78,6 +79,30 @@ angular.module('mean.system')
             $scope.message = err;
           });
         }
+      };
+      const fetchInviteFromServer = () => {
+        $http.get('/invites', { params: { userId: window.user._id } }).success((response) => {
+          $scope.invites = response;
+          $scope.notificationCounter = $scope.invites.length === 0 ? null : $scope.invites.length;
+        });
+      };
+      $scope.showInvites = (event) => {
+        event.preventDefault();
+        fetchInviteFromServer();
+      };
+
+      $scope.goToGame = (noticeId, event) => {
+        event.preventDefault();
+        $http.get('/invite/delete', { params: { noticeId } }).success((response) => {
+          $window.location.href = response;
+          $window.location.reload();
+        });
+      };
+
+      $scope.init = () => {
+        $http.get('/invites', { params: { userId: window.user._id } }).success((res) => {
+          $scope.notificationCounter = res.length === 0 ? null : res.length;
+        });
       };
 
       $scope.avatars = [];

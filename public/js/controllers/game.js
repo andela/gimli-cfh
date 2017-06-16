@@ -8,17 +8,20 @@ $location, MakeAWishFactsService, $dialog, $http) => {
     $scope.showTable = false;
     $scope.modalShown = false;
     $scope.game = game;
+    $scope.userFriends = [];
     $scope.pickedCards = [];
     $scope.checkedBoxCount = 0;
     $scope.enableSendGuestInvite = false;
-    let makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
+    const makeAWishFacts = MakeAWishFactsService.getMakeAWishFacts();
     $scope.makeAWishFact = makeAWishFacts.pop();
+
     const windw = this;
-    $.fn.followTo = (pos) => {
-      const $this = $(this),
+
+    $.fn.followTo = function (pos) {
+      let $this = this,
         $window = $(windw);
 
-      $window.scroll(() => {
+      $window.scroll((e) => {
         if ($window.scrollTop() > pos) {
           $this.css({
             position: 'absolute',
@@ -194,8 +197,8 @@ $location, MakeAWishFactsService, $dialog, $http) => {
             $scope.sendPickedCards();
             $scope.hasPickedCards = true;
           } else if (game.curQuestion.numAnswers === 2 &&
-          $scope.pickedCards.length === 2) {
-          // delay and send
+            $scope.pickedCards.length === 2) {
+            // delay and send
             $scope.hasPickedCards = true;
             $timeout($scope.sendPickedCards, 300);
           }
@@ -221,7 +224,7 @@ $location, MakeAWishFactsService, $dialog, $http) => {
    */
     $scope.searchUser = () => {
       const searchString = $scope.searchString || ' ';
-      $http.get(`http://localhost:3000/api/search/users/${searchString}/`)
+      $http.get(`/api/search/users/${searchString}/`)
       .success((response) => {
         $scope.users = response;
       });
@@ -250,12 +253,11 @@ $location, MakeAWishFactsService, $dialog, $http) => {
       if (filter.test($scope.guestEmail)) $scope.enableSendGuestInvite = true;
     };
 
-  /**
-   * Send an email to the email added by the user
-   * @function emailGuests
-   * @returns {any} - Sends email
-   */
-
+    /**
+     * Send an email to the email added by the user
+     * @function emailGuests
+     * @returns {any} - Sends email
+     */
     $scope.emailGuests = () => {
       const details = JSON.stringify(
         { name: 'Guest',
@@ -265,11 +267,11 @@ $location, MakeAWishFactsService, $dialog, $http) => {
       $scope.guestEmail = '';
     };
 
-  /**
-   * Send bulk invite emails to users
-   * @function emailUsers
-   * @returns {any} - send mail
-   */
+    /**
+     * Send bulk invite emails to users
+     * @function emailUsers
+     * @returns {any} - send mail
+     */
     $scope.emailUsers = () => {
       const userDetails = $scope.users.filter(user => (
       user.selected
@@ -280,6 +282,80 @@ $location, MakeAWishFactsService, $dialog, $http) => {
             email: email.email,
             url: `${encodeURIComponent(window.location.href)}` });
         $http.get(`http://localhost:3000/api/sendmail/${details}`);
+      });
+    };
+
+    $scope.getFriends = () => {
+      if ($scope.searchText === '') {
+        $scope.userFriends = [];
+      } else {
+        $http.get('/friends', { params: { searchText: $scope.searchText, userId: window.user._id } })
+          .success((response) => {
+            $scope.userFriends = response;
+          }, (error) => {
+            console.log(error);
+          }
+          );
+      }
+    };
+
+    $scope.addFriend = (friend, button) => {
+      const userId = window.user._id;
+      const url = button.target.baseURI;
+      $http.post('/friends',
+        {
+          userId,
+          friend,
+          url
+        })
+        .success((response) => {
+          if (response.succ === 'Successful') {
+            setTimeout(() => {
+              $scope.$apply(() => {
+                if (response.action === 'addfriend') {
+                  $scope.userFriends.push(response.friendId);
+                } else {
+                  const resultId = response.friendId;
+                  const index = $scope.userFriends.indexOf(resultId);
+                  if (index !== -1) {
+                    $scope.userFriends.splice(index, 1);
+                  }
+                }
+              });
+            }, 100);
+          }
+        });
+    };
+
+    $scope.sendInvite = (friendId, event) => {
+      const url = event.target.baseURI;
+      const userName = { userName: window.user.name, userId: window.user._id };
+      $http.post('/notify',
+        {
+          userName,
+          friendId,
+          url
+        })
+        .success((response) => {
+          $scope.inviteMessage = response.status;
+        });
+    };
+    $scope.deleteFriend = (friend, event) => {
+      event.preventDefault();
+      $http.get('/delete/friend', { params: { friend, userId: window.user._id } }).success((res) => {
+        if (res === 'success') {
+          let friendIndex = null;
+          $scope.userFriends.forEach((friendId, index) => {
+            if (friendId.userId === friend.userId) {
+              friendIndex = index;
+            } else {
+              friendIndex = -1;
+            }
+          });
+          if (friendIndex !== -1) {
+            $scope.userFriends.splice(friendIndex, 1);
+          }
+        }
       });
     };
 
@@ -308,6 +384,7 @@ $location, MakeAWishFactsService, $dialog, $http) => {
       }
       return false;
     };
+
 
     $scope.secondAnswer = ($index) => {
       if ($index % 2 === 1 && game.curQuestion.numAnswers > 1) {
@@ -468,16 +545,27 @@ $location, MakeAWishFactsService, $dialog, $http) => {
       $('#modal2').modal('open');
     };
 
+    /**
+     * Opens modal when share button is clicked
+     * @function showModal3
+     * @returns {any} - opens modal
+     */
+    $scope.showModal3 = () => {
+      $('.modal').modal();
+      $('#modal3').modal('open');
+      $scope.userFriends = [];
+    };
+
     $scope.$watch('game.gameID', () => {
       if (game.gameID && game.state === 'awaiting players') {
         if (!$scope.isCustomGame() && $location.search().game) {
-        // If the player didn't successfully enter the request room,
-        // reset the URL so they don't think they're in the requested room.
+          // If the player didn't successfully enter the request room,
+          // reset the URL so they don't think they're in the requested room.
           $location.search({});
         } else if ($scope.isCustomGame() && !$location.search().game) {
-        // Once the game ID is set,
-        // update the URL if this is a game with friends,
-        // where the link is meant to be shared.
+          // Once the game ID is set,
+          // update the URL if this is a game with friends,
+          // where the link is meant to be shared.
           $location.search({ game: game.gameID });
           if (!$scope.modalShown) {
             setTimeout(() => {
@@ -485,7 +573,7 @@ $location, MakeAWishFactsService, $dialog, $http) => {
               $('#lobby-how-to-play').hide();
               $('#oh-el').hide();
               $('#share-link')
-            .css({ 'text-align': 'left', display: 'block' });
+                .css({ 'text-align': 'left', display: 'block' });
               $('#copy-link').text(txt);
             }, 200);
             $scope.modalShown = true;
